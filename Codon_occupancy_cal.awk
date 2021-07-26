@@ -18,7 +18,7 @@ awk 'BEGIN{FS=OFS="\t"} NR==FNR{
      }NR!=FNR && $1!~/^@/ && $3!="*"{ 
 
      if($4%3==1){frame=0}else if($4%3==2){frame=-1}else if($4%3==0){frame=1}
-     if(length($10) >= 27 && length($10) <= 29 && $4+16+frame > 45 && $4+16+frame < Gene_length[$3]-45){
+     if(length($10) >= 27 && length($10) <= 29 && $4+16+frame > 45 && $4+16+frame < Gene_length[$3]-45){ # limit the length size
         
      	print substr($10,16+frame,3), substr($10,19+frame,3), substr($10,22+frame,3), substr($10,25+frame,3)
      }
