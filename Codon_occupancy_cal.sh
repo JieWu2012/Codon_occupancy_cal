@@ -2,10 +2,10 @@
 #!/bin/awk -f
 
 
-# This
+# This script is for calculating the codon occupancy of all codons (TGA,TAA and TAG excluded) in ribosome profiling data. 
 
 SamFile=$1
-CDSFile=$2
+CDSFile=$2  
 
 awk 'BEGIN{FS=OFS="\t"} NR==FNR{
 
@@ -17,11 +17,15 @@ awk 'BEGIN{FS=OFS="\t"} NR==FNR{
      }
 
      }NR!=FNR && $1!~/^@/ && $3!="*"{ 
-
-     if($4%3==1){frame=0}else if($4%3==2){frame=-1}else if($4%3==0){frame=1}
-     if(length($10) >= 27 && length($10) <= 29 && $4+16+frame > 45 && $4+16+frame < Gene_length[$3]-45){
-        
-     	print substr($10,16+frame,3), substr($10,19+frame,3), substr($10,22+frame,3), substr($10,25+frame,3)
+     
+     if($4%3==1){frame=0}else if($4%3==2){frame=-1}else if($4%3==0){frame=1} 
+     # Limit the length to 27~29nt
+     if(length($10) >= 27 && length($10) <= 29){ 
+     
+        if($4+16+frame > 45 && $4+16+frame < Gene_length[$3]-45){
+	
+     	     print substr($10,16+frame,3), substr($10,19+frame,3), substr($10,22+frame,3), substr($10,25+frame,3)
+	     }
      }
 
 }' $2 $1 | awk 'BEGIN{FS=OFS="\t"}{
@@ -42,7 +46,7 @@ awk 'BEGIN{FS=OFS="\t"} NR==FNR{
 
 }END{
     for(j in CodonA){
-
+        # Normalized to the mean of +1, +2 and +3 sites
     	print j,CodonA[j]*3/(Codon1[j]+Codon2[j]+Codon1[2])
     }
 
