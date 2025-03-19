@@ -1,4 +1,7 @@
 # Codon_occupancy_cal
+
+[![DOI](https://zenodo.org/badge/383824144.svg)](https://doi.org/10.5281/zenodo.15048364)
+
 This code is for calculating the relative codon occupancy in the analysis of ribosome profiling data. 
 
 "Codon_occupancy_cal.sh" script acceptes the mapping results (SAM format) and sequence of CDS (Fasta format) as input and it outputs the occupancy of each codon. Make sure the CDS fasta file matches the reference you used to map the Ribo-seq reads.  And use the following command: 
